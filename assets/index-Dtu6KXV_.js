@@ -24,7 +24,7 @@ The website features interactive Power BI dashboards for each analytics layer, r
 - Lowest: Pasay, Pateros, Navotas, Malabon.
 - Vehicle types: Motorcycle = 33,639 cases (highest fatal rate). Private Car and Public Utility follow.
 - Collision types: Side Swipe = 26,313 incidents (most common). Rear End and Head On follow.
-- Highest risk age bracket: 66+ (highest fatality rate at 98.51%). Age 52-65 also very high at 87.87%.
+- Highest predicted risk age bracket (from Logistic Regression): 66+ has a 98.51% predicted probability of being classified as high-risk for fatal involvement. Age 52-65 is at 87.87%. NOTE: These are model-predicted risk probabilities, NOT actual fatality rates. The actual fatality rate for age 66+ from descriptive analysis is approximately 5%.
 - Total vehicle incidents: 2,000,000+ across all vehicle types over 10 years.
 - The website Descriptive section has 4 Power BI dashboard tabs: Vehicle Type, Collision Types, Age Group, and Time.
 
@@ -35,7 +35,7 @@ The website features interactive Power BI dashboards for each analytics layer, r
 
 === PREDICTIVE FINDINGS ===
 - District Hotspot Classifier (Random Forest): CV Accuracy = 0.782, F1 = 0.776. Classifies districts as High or Low risk.
-- Age-Group Fatal Risk (Logistic Regression): Accuracy = 0.900, AUC-ROC = 0.978. Shows predicted risk probability by age bracket. Ages 52-65 (87.87%) and 66+ (98.51%) are high risk. Ages 0-17 (29.44%), 18-34 (4.27%), and 35-51 (29.89%) are low risk.
+- Age-Group Fatal Risk (Logistic Regression): Accuracy = 0.900, AUC-ROC = 0.978. Shows predicted probability of being classified as high-risk for fatal involvement by age bracket. Ages 52-65 (87.87% predicted risk probability) and 66+ (98.51% predicted risk probability) are classified as high risk. Ages 0-17 (29.44%), 18-34 (4.27%), and 35-51 (29.89%) are classified as low risk. IMPORTANT: These percentages represent the model's predicted risk classification probability, NOT the actual fatality rate. The actual fatality rate for 66+ is approximately 5% based on descriptive analysis.
 - RF Classification Output: Per-city risk classification for 2025 showing which of the 17 cities are classified as High vs Low risk.
 - Prophet Forecast 2025: Time-series forecast projecting incident volumes into 2025-2026 for Fatal, Non-Fatal Injury, Damage to Property, and Grand Total categories. Trained on full 2015-2024 data.
 
@@ -64,7 +64,7 @@ The website features embedded Power BI dashboards on the Overview page (District
 - Total 2024 incidents: 88,101
 - Fatal incidents 2024: 427
 - Cities monitored: 17
-- Highest fatality rate age group: 66+ at 98.51%
+- Highest predicted risk age group: 66+ at 98.51% predicted probability of high-risk classification (actual fatality rate ~5% from descriptive analysis)
 
 === RESPONSE GUIDELINES ===
 - Be precise and cite specific numbers from the data.
