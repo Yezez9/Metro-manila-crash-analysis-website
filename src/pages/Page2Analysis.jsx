@@ -393,7 +393,7 @@ export default function Page2Analysis() {
         <div className="footer__inner">
           <div className="footer__left">
             <p style={{ textTransform: 'uppercase', letterSpacing: '2px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.72rem' }}>
-              MMARAS Project · © 2024 · Bulacan State University · BS Data Science
+              MMARAS Project · © 2026 · Bulacan State University · BS Data Science
             </p>
           </div>
           <div className="footer__right">
