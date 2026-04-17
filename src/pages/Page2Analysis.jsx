@@ -421,174 +421,91 @@ export default function Page2Analysis() {
         {/* Tab Switcher */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
           {[
-            { key: 'vehicle', label: 'Vehicle Type', color: '#00C9A7' },
-            { key: 'collision', label: 'Collision Types', color: '#00C9A7' },
-            { key: 'age', label: 'Age Group', color: '#00C9A7' },
-            { key: 'time', label: 'Time', color: '#FF9F43' },
-          ].map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setDescTab(tab.key)}
-              style={{
-                padding: '10px 24px',
-                borderRadius: '999px',
-                border: `2px solid ${descTab === tab.key ? tab.color : 'rgba(140,155,181,0.3)'}`,
-                background: descTab === tab.key ? `${tab.color}22` : 'transparent',
-                color: descTab === tab.key ? tab.color : '#8C9BB5',
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '0.78rem',
-                fontWeight: 600,
-                letterSpacing: '1px',
-                cursor: 'pointer',
-                transition: 'all 0.25s ease',
-                boxShadow: descTab === tab.key ? `0 0 16px ${tab.color}18` : 'none',
-              }}
-            >
-              {tab.label}
-            </button>
-          ))}
+            { key: 'vehicle', label: 'Vehicle Type', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'collision', label: 'Collision Types', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'age', label: 'Age Group', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'time', label: 'Time', activeColor: '#f59e0b', activeBg: 'rgba(245,158,11,0.15)', glowColor: 'rgba(245,158,11,0.4)' },
+          ].map((tab) => {
+            const isActive = descTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setDescTab(tab.key)}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '999px',
+                  border: isActive ? `1px solid ${tab.activeColor}` : '1px solid rgba(255,255,255,0.2)',
+                  background: isActive ? tab.activeBg : '#0f172a',
+                  color: isActive ? tab.activeColor : 'rgba(255,255,255,0.7)',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                  letterSpacing: '1px',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  boxShadow: isActive ? `0 0 12px ${tab.glowColor}` : 'none',
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Tab Panels */}
-        {descTab === 'vehicle' && (
-          <div className="card card--blue card--glow-blue" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div className="chart-container__title" style={{ fontSize: '0.95rem', textAlign: 'center', width: '100%' }}>
-              Vehicle Involvement
-            </div>
-            <div className="donut-center" style={{ flex: 1 }}>
-              <div style={{
-                width: 140,
-                height: 140,
-                borderRadius: '50%',
-                border: '6px solid var(--accent-teal)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 0 30px rgba(0,201,167,0.15), inset 0 0 30px rgba(0,201,167,0.05)',
-              }}>
-                <span className="donut-center__value" style={{ fontSize: '1.8rem' }}>33,639</span>
-                <span className="donut-center__label" style={{ fontSize: '0.6rem' }}>MOTORCYCLES</span>
-              </div>
-            </div>
-            <div className="chart-caption" style={{ textAlign: 'center' }}>
-              SHARE OF CRASH-INVOLVED VEHICLES, NOT TOTAL FLEET DISTRIBUTION.
-            </div>
-          </div>
-        )}
-
-        {descTab === 'collision' && (
-          <div className="card card--blue card--glow-blue">
-            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
-              Collision Types
-            </div>
-            <div style={{ marginTop: 16 }}>
-              <ResponsiveContainer width="100%" height={180}>
-                <BarChart
-                  data={collisionData}
-                  layout="vertical"
-                  margin={{ top: 5, right: 60, left: 5, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" horizontal={false} />
-                  <XAxis
-                    type="number"
-                    tick={{ fill: '#8C9BB5', fontFamily: "'IBM Plex Mono', monospace", fontSize: 9 }}
-                    stroke="#8C9BB5"
-                    hide
-                  />
-                  <YAxis
-                    type="category"
-                    dataKey="type"
-                    width={90}
-                    tick={{ fill: '#8C9BB5', fontFamily: "'IBM Plex Mono', monospace", fontSize: 10 }}
-                    stroke="transparent"
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="count" name="Crashes" fill="#1E90FF" radius={[0, 4, 4, 0]} barSize={18} label={{
-                    position: 'right',
-                    fill: '#8C9BB5',
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: 10,
-                    formatter: (v) => v.toLocaleString(),
-                  }} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
-
-        {descTab === 'age' && (
-          <div className="card card--blue card--glow-blue">
-            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
-              Age Brackets · 18–34 Risk
-            </div>
-            <div style={{ marginTop: 16 }}>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={ageBracketData} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                  <XAxis
-                    dataKey="year"
-                    tick={{ fill: '#8C9BB5', fontFamily: "'IBM Plex Mono', monospace", fontSize: 10 }}
-                    stroke="#8C9BB5"
-                  />
-                  <YAxis
-                    tick={{ fill: '#8C9BB5', fontFamily: "'IBM Plex Mono', monospace", fontSize: 10 }}
-                    stroke="#8C9BB5"
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend
-                    wrapperStyle={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.65rem',
-                    }}
-                  />
-                  <Bar dataKey="fatal" name="FATAL" stackId="a" fill="#FF6B6B" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="nonFatal" name="NON-FATAL" stackId="a" fill="#1E90FF" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
-
-        {descTab === 'time' && (
-          <div className="card card--orange card--glow-orange">
-            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
-              Fatal Rate by Hour · 10 PM–3 AM Danger Window
-            </div>
-
-            <div className="heatmap-grid" style={{ marginTop: 20 }}>
-              <div className="heatmap-row">
-                {hourRates.map((h) => (
-                  <div
-                    key={`t1-${h.hour}`}
-                    className="heatmap-cell"
-                    style={{ background: getHeatColor(h.rate) }}
-                    title={`${h.hour}:00 — Rate: ${h.rate}`}
-                  />
-                ))}
-              </div>
-              <div className="heatmap-row">
-                {hourRates.map((h) => (
-                  <div
-                    key={`t2-${h.hour}`}
-                    className="heatmap-cell"
-                    style={{ background: getHeatColor(h.rate * 0.9) }}
-                    title={`${h.hour}:00`}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="heatmap-labels">
-              {hourRates.map((h) => (
-                <span key={h.hour}>{h.hour.toString().padStart(2, '0')}</span>
-              ))}
-            </div>
-
-            <div className="chart-caption" style={{ color: '#FF6B6B' }}>
-              ■ DANGER PEAK (22:00–03:00)
-            </div>
-          </div>
-        )}
+        {/* Tab Panels — Power BI Iframes */}
+        <div style={{
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: '1px solid rgba(0,201,167,0.15)',
+          boxShadow: '0 0 24px rgba(0,201,167,0.06)',
+          background: 'var(--bg-card)',
+        }}>
+          {descTab === 'vehicle' && (
+            <iframe
+              title="Vehicle Type Dashboard"
+              width="100%"
+              height="541"
+              src="https://app.powerbi.com/reportEmbed?reportId=f016420f-bfd5-4659-a5b0-c51932bab9b4&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block', border: 'none' }}
+            />
+          )}
+          {descTab === 'collision' && (
+            <iframe
+              title="Collision Types Dashboard"
+              width="100%"
+              height="541"
+              src="https://app.powerbi.com/reportEmbed?reportId=52e1faf9-2cdb-41d0-b9da-fbe72b8a5006&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block', border: 'none' }}
+            />
+          )}
+          {descTab === 'age' && (
+            <iframe
+              title="Age Group Dashboard"
+              width="100%"
+              height="541"
+              src="https://app.powerbi.com/reportEmbed?reportId=1c074f20-9a1f-4baa-a695-1dc5904b6afa&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block', border: 'none' }}
+            />
+          )}
+          {descTab === 'time' && (
+            <iframe
+              title="Time Dashboard"
+              width="100%"
+              height="541"
+              src="https://app.powerbi.com/reportEmbed?reportId=0a78610e-350b-423b-925c-d93f78fec777&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block', border: 'none' }}
+            />
+          )}
+        </div>
       </section>
 
       {/* FOOTER */}
