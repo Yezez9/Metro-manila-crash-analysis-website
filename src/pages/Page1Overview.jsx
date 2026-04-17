@@ -24,12 +24,12 @@ export default function Page1Overview() {
         <div className="kpi-card">
           <div className="kpi-card__label">Annual Incident Volume</div>
           <div className="kpi-card__value">88,101</div>
-          <div className="kpi-card__desc">crashes in 2024</div>
+          <div className="kpi-card__desc">incidents in 2024</div>
         </div>
         <div className="kpi-card" style={{ borderLeftColor: '#FF6B6B' }}>
           <div className="kpi-card__label">Critical Severity</div>
           <div className="kpi-card__value">427</div>
-          <div className="kpi-card__desc kpi-card__desc--red">Fatal Incidents</div>
+          <div className="kpi-card__desc kpi-card__desc--red">Fatal Incidents in 2024</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-card__label">Geospatial Scope</div>
@@ -43,7 +43,7 @@ export default function Page1Overview() {
         <div className="objective-text">
           <h2>Scientific Objective</h2>
           <p>
-            The Metro Manila Road Traffic Crash Analysis System (MMARAS) leverages
+            The Metro Manila Road Traffic Incident Analysis System (MMARAS) leverages
             longitudinal data from 2015 to 2024 to decode the complex dynamics of
             urban mobility safety. By integrating heterogeneous data sources, the project
             provides a granular view of risk factors contributing to incident severity and
@@ -67,7 +67,7 @@ export default function Page1Overview() {
             </div>
             <div className="layer-card__name" style={{ color: '#1E90FF' }}>Descriptive</div>
             <div className="layer-card__desc">
-              Summarizes 10 years of crash trends across 17 cities, 5 districts, vehicle types, collision patterns, and demographic profiles using historical MMARAS data.
+              Summarizes 10 years of incident trends across 17 cities, 5 districts, vehicle types, collision patterns, and demographic profiles using historical MMARAS data.
             </div>
           </div>
           <div className="layer-card" style={{ boxShadow: '0 0 20px rgba(255,159,67,0.08)' }}>
@@ -76,7 +76,7 @@ export default function Page1Overview() {
             </div>
             <div className="layer-card__name" style={{ color: '#FF9F43' }}>Diagnostic</div>
             <div className="layer-card__desc">
-              Identifies key risk factors driving fatal crashes — including time-of-day danger windows, motorcycle exposure, and district-level severity patterns.
+              Identifies key risk factors driving fatal incidents — including time-of-day danger windows, motorcycle exposure, and district-level severity patterns.
             </div>
           </div>
           <div className="layer-card" style={{ boxShadow: '0 0 20px rgba(155,89,182,0.08)' }}>
@@ -85,7 +85,7 @@ export default function Page1Overview() {
             </div>
             <div className="layer-card__name" style={{ color: '#9B59B6' }}>Predictive</div>
             <div className="layer-card__desc">
-              Forecasts 2025 crash volumes using Prophet time series and classifies district and demographic fatal risk using Random Forest and Logistic Regression.
+              Forecasts 2025 incident volumes using Prophet time series and classifies district and demographic fatal risk using Random Forest and Logistic Regression.
             </div>
           </div>
           <div className="layer-card" style={{ boxShadow: '0 0 20px rgba(46,204,113,0.08)' }}>

@@ -105,7 +105,7 @@ export default function Page2Analysis() {
       {/* ===== SECTION 1: DIAGNOSTIC — WHAT DRIVES CRASHES ===== */}
       <section className="section" id="analysis-diagnostic-drivers">
         <h2 className="section-header section-header--orange">
-          Diagnostic: What Drives Crashes?
+          Diagnostic: What Drives Incidents?
         </h2>
 
         <div className="two-col">
@@ -131,7 +131,7 @@ export default function Page2Analysis() {
           <div className="card card--orange card--glow-orange" style={{ position: 'relative' }}>
             <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/aadt_scatter.png`, alt: 'AADT vs Incident' })} />
             <div className="chart-container__title" style={{ fontSize: '1rem' }}>
-              AADT vs Crash Volume (2016–2024)
+              AADT vs Incident Volume (2016–2024)
             </div>
             <div style={{ marginTop: 20 }}>
               <img
@@ -181,7 +181,7 @@ export default function Page2Analysis() {
 
           {/* Card B: Age-Group Fatal Risk (LogReg) */}
           <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
-            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/logreg_auc_roc.jpg`, alt: 'Logistic Regression AUC-ROC' })} />
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/logreg_auc_roc.png`, alt: 'Logistic Regression AUC-ROC' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               Age-Group Fatal Risk (LogReg)
             </div>
@@ -190,8 +190,8 @@ export default function Page2Analysis() {
             </div>
             <div style={{ marginTop: 16 }}>
               <img
-                src={`${BASE}images/logreg_auc_roc.jpg`}
-                alt="Logistic Regression — Fatal Crash Age Risk"
+                src={`${BASE}images/logreg_auc_roc.png`}
+                alt="Logistic Regression — Fatal Incident Age Risk"
                 style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
               />
             </div>
@@ -223,13 +223,13 @@ export default function Page2Analysis() {
 
           {/* Card D: Prophet Forecast 2025 */}
           <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
-            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/prophet_forecast.jpg`, alt: 'Prophet Forecast 2025' })} />
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/prophet_forecast.png`, alt: 'Prophet Forecast 2025' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               Prophet Forecast 2025
             </div>
             <div style={{ marginTop: 16 }}>
               <img
-                src={`${BASE}images/prophet_forecast.jpg`}
+                src={`${BASE}images/prophet_forecast.png`}
                 alt="2025 Forecast — Trained on Full 2015-2024 Data"
                 style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
               />
@@ -244,7 +244,7 @@ export default function Page2Analysis() {
       {/* ===== SECTION 3: DESCRIPTIVE — CRASH PROFILES ===== */}
       <section className="section" id="analysis-descriptive">
         <h2 className="section-header section-header--blue">
-          Descriptive: Crash Profiles
+          Descriptive: Incident Profiles
         </h2>
 
         {/* 3 Stat Cards */}

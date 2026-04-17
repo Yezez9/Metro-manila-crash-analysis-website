@@ -14,13 +14,13 @@ Here is your complete knowledge base:
 
 === PROJECT OVERVIEW ===
 Full Title: Spatiotemporal Analysis and Predictive Modeling of Road Traffic Incidents in Metro Manila: A Machine Learning and GIS Approach Using MMARAS & AADT Data (2015-2024).
-MMARAS analyzes 10 years of road traffic crash data (2015–2024) across all 17 cities/municipalities in Metro Manila's National Capital Region (NCR). Total incidents analyzed: 88,101 crashes in 2024. Fatal incidents: 427 in 2024. The project uses four analytics layers: Descriptive, Diagnostic, Predictive, and Prescriptive.
+MMARAS analyzes 10 years of road traffic incident data (2015–2024) across all 17 cities/municipalities in Metro Manila's National Capital Region (NCR). Total incidents analyzed: 88,101 incidents in 2024. Fatal incidents: 427 in 2024. The project uses four analytics layers: Descriptive, Diagnostic, Predictive, and Prescriptive.
 The website features interactive Power BI dashboards for each analytics layer, real chart images from model outputs, and 3 interactive GIS maps.
 
 === DESCRIPTIVE FINDINGS ===
-- 10-Year Trend: Crashes rose steadily from ~80,000 in 2015 to 88,000+ in 2019, then dropped sharply during COVID-19 (2020–2021 dip to ~45,000–48,000), recovering by 2022–2024 back to ~85,000+.
-- Top city: Quezon City with 34,716 total crashes (39.4% of all NCR crashes).
-- Other high-crash cities: Pasig City, Taguig City, Caloocan, Parañaque, Valenzuela.
+- 10-Year Trend: Incidents rose steadily from ~80,000 in 2015 to 88,000+ in 2019, then dropped sharply during COVID-19 (2020–2021 dip to ~45,000–48,000), recovering by 2022–2024 back to ~85,000+.
+- Top city: Quezon City with 34,716 total incidents (39.4% of all NCR incidents).
+- Other high-incident cities: Pasig City, Taguig City, Caloocan, Parañaque, Valenzuela.
 - Lowest: Pasay, Pateros, Navotas, Malabon.
 - Vehicle types: Motorcycle = 33,639 cases (highest fatal rate). Private Car and Public Utility follow.
 - Collision types: Side Swipe = 26,313 incidents (most common). Rear End and Head On follow.
@@ -30,14 +30,14 @@ The website features interactive Power BI dashboards for each analytics layer, r
 
 === DIAGNOSTIC FINDINGS ===
 - Random Forest Feature Importance (Top 3 predictors): NON_FATAL_INJURY (0.530), DAMAGE_TO_PROPERTY (0.367), YEAR (0.103). Leakage-free model with CV accuracy of 0.782.
-- AADT vs Crash Volume correlation: Pre-COVID r = +0.963 (blue regime, strong positive). COVID/Post-COVID r = -0.417 (red regime, negative). This is a two-regime analysis covering 2016-2024.
+- AADT vs Incident Volume correlation: Pre-COVID r = +0.963 (blue regime, strong positive). COVID/Post-COVID r = -0.417 (red regime, negative). This is a two-regime analysis covering 2016-2024.
 - Fatal Time Window: Danger peak is 10 PM to 3 AM (22:00–03:00).
 
 === PREDICTIVE FINDINGS ===
 - District Hotspot Classifier (Random Forest): CV Accuracy = 0.782, F1 = 0.776. Classifies districts as High or Low risk.
 - Age-Group Fatal Risk (Logistic Regression): Accuracy = 0.900, AUC-ROC = 0.978. Shows predicted risk probability by age bracket. Ages 52-65 (87.87%) and 66+ (98.51%) are high risk. Ages 0-17 (29.44%), 18-34 (4.27%), and 35-51 (29.89%) are low risk.
 - RF Classification Output: Per-city risk classification for 2025 showing which of the 17 cities are classified as High vs Low risk.
-- Prophet Forecast 2025: Time-series forecast projecting crash volumes into 2025-2026 for Fatal, Non-Fatal Injury, Damage to Property, and Grand Total categories. Trained on full 2015-2024 data.
+- Prophet Forecast 2025: Time-series forecast projecting incident volumes into 2025-2026 for Fatal, Non-Fatal Injury, Damage to Property, and Grand Total categories. Trained on full 2015-2024 data.
 
 === GIS MAPS ===
 - GIS Map 1+2: RF Classification map showing district-level risk classification with AADT corridor exposure overlay.
@@ -61,7 +61,7 @@ The website features embedded Power BI dashboards on the Overview page (District
 - Peak fatal time: 10 PM–3 AM
 - Motorcycle cases: 33,639
 - EDSA AADT: 419,952 vehicles/day
-- Total 2024 crashes: 88,101
+- Total 2024 incidents: 88,101
 - Fatal incidents 2024: 427
 - Cities monitored: 17
 - Highest fatality rate age group: 66+ at 98.51%
@@ -75,11 +75,11 @@ The website features embedded Power BI dashboards on the Overview page (District
 
 const SUGGESTED_QUESTIONS = [
   "What are the key findings of the MMARAS project?",
-  "Which city has the most crashes?",
+  "Which city has the most incidents?",
   "What is the peak fatal time window?",
   "How accurate is the Random Forest model?",
   "What policy recommendations does MMARAS propose?",
-  "Tell me about motorcycle crash statistics",
+  "Tell me about motorcycle incident statistics",
 ];
 
 export default function Page4Chatbot() {
