@@ -98,8 +98,16 @@ function getHeatColor(rate) {
   return '#2a3050';
 }
 
+const DESC_URLS = {
+  vehicle: 'https://app.powerbi.com/reportEmbed?reportId=f016420f-bfd5-4659-a5b0-c51932bab9b4&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
+  collision: 'https://app.powerbi.com/reportEmbed?reportId=52e1faf9-2cdb-41d0-b9da-fbe72b8a5006&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
+  age: 'https://app.powerbi.com/reportEmbed?reportId=1c074f20-9a1f-4baa-a695-1dc5904b6afa&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
+  time: 'https://app.powerbi.com/reportEmbed?reportId=0a78610e-350b-423b-925c-d93f78fec777&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
+};
+
 export default function Page2Analysis() {
   const [descTab, setDescTab] = useState('vehicle');
+  const [descFullscreen, setDescFullscreen] = useState(false);
 
   return (
     <div className="page-container">
@@ -418,12 +426,17 @@ export default function Page2Analysis() {
           </div>
         </div>
 
-        {/* Tab Switcher */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
+        {/* Tab Switcher — matches Overview District/Incidents style */}
+        <div style={{
+          display: 'flex',
+          gap: 8,
+          marginBottom: 20,
+          flexWrap: 'wrap',
+        }}>
           {[
-            { key: 'vehicle', label: 'Vehicle Type', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
-            { key: 'collision', label: 'Collision Types', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
-            { key: 'age', label: 'Age Group', activeColor: '#00d4aa', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'vehicle', label: 'Vehicle Type', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'collision', label: 'Collision Types', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
+            { key: 'age', label: 'Age Group', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
             { key: 'time', label: 'Time', activeColor: '#f59e0b', activeBg: 'rgba(245,158,11,0.15)', glowColor: 'rgba(245,158,11,0.4)' },
           ].map((tab) => {
             const isActive = descTab === tab.key;
@@ -434,9 +447,9 @@ export default function Page2Analysis() {
                 style={{
                   padding: '10px 24px',
                   borderRadius: '999px',
-                  border: isActive ? `1px solid ${tab.activeColor}` : '1px solid rgba(255,255,255,0.2)',
-                  background: isActive ? tab.activeBg : '#0f172a',
-                  color: isActive ? tab.activeColor : 'rgba(255,255,255,0.7)',
+                  border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(140,155,181,0.3)',
+                  background: isActive ? tab.activeBg : 'transparent',
+                  color: isActive ? tab.activeColor : '#8C9BB5',
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: '0.78rem',
                   fontWeight: 600,
@@ -452,61 +465,113 @@ export default function Page2Analysis() {
           })}
         </div>
 
-        {/* Tab Panels — Power BI Iframes */}
+        {/* Iframe container — matches Overview dashboard container */}
         <div style={{
           width: '100%',
           borderRadius: '8px',
           overflow: 'hidden',
           border: '1px solid rgba(0,201,167,0.15)',
           boxShadow: '0 0 24px rgba(0,201,167,0.06)',
-          background: 'var(--bg-card)',
+          position: 'relative',
         }}>
-          {descTab === 'vehicle' && (
-            <iframe
-              title="Vehicle Type Dashboard"
-              width="100%"
-              height="541"
-              src="https://app.powerbi.com/reportEmbed?reportId=f016420f-bfd5-4659-a5b0-c51932bab9b4&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
-              frameBorder="0"
-              allowFullScreen={true}
-              style={{ display: 'block', border: 'none' }}
-            />
-          )}
-          {descTab === 'collision' && (
-            <iframe
-              title="Collision Types Dashboard"
-              width="100%"
-              height="541"
-              src="https://app.powerbi.com/reportEmbed?reportId=52e1faf9-2cdb-41d0-b9da-fbe72b8a5006&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
-              frameBorder="0"
-              allowFullScreen={true}
-              style={{ display: 'block', border: 'none' }}
-            />
-          )}
-          {descTab === 'age' && (
-            <iframe
-              title="Age Group Dashboard"
-              width="100%"
-              height="541"
-              src="https://app.powerbi.com/reportEmbed?reportId=1c074f20-9a1f-4baa-a695-1dc5904b6afa&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
-              frameBorder="0"
-              allowFullScreen={true}
-              style={{ display: 'block', border: 'none' }}
-            />
-          )}
-          {descTab === 'time' && (
-            <iframe
-              title="Time Dashboard"
-              width="100%"
-              height="541"
-              src="https://app.powerbi.com/reportEmbed?reportId=0a78610e-350b-423b-925c-d93f78fec777&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4"
-              frameBorder="0"
-              allowFullScreen={true}
-              style={{ display: 'block', border: 'none' }}
-            />
-          )}
+          {/* Fullscreen toggle */}
+          <button
+            onClick={() => setDescFullscreen(true)}
+            title="Enter fullscreen"
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              zIndex: 10,
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              border: '1px solid rgba(0,201,167,0.3)',
+              background: 'rgba(11,20,55,0.85)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backdropFilter: 'blur(8px)',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg>
+          </button>
+
+          <iframe
+            title="Descriptive Dashboard"
+            width="100%"
+            height="600"
+            src={DESC_URLS[descTab]}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ display: 'block' }}
+          />
         </div>
       </section>
+
+      {/* FULLSCREEN OVERLAY — Descriptive */}
+      {descFullscreen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999,
+          background: 'rgba(0,0,0,0.92)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <button
+            onClick={() => setDescFullscreen(false)}
+            title="Exit fullscreen"
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              zIndex: 10000,
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(0,201,167,0.4)',
+              background: 'rgba(20,28,56,0.9)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              fontWeight: 700,
+              transition: 'all 0.25s ease',
+            }}
+          >
+            ✕
+          </button>
+          <iframe
+            title="Descriptive Dashboard Fullscreen"
+            width="100%"
+            height="100%"
+            src={DESC_URLS[descTab]}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{
+              display: 'block',
+              border: 'none',
+              width: '100vw',
+              height: '100vh',
+            }}
+          />
+        </div>
+      )}
 
       {/* FOOTER */}
       <footer className="footer" id="analysis-footer">
