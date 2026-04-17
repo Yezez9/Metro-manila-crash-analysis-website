@@ -144,7 +144,7 @@ export default function Page1Overview() {
                 transition: 'all 0.25s ease',
               }}
             >
-              Dashboard 1
+              Overview District
             </button>
             <button
               onClick={() => setActiveDash('dash2')}
@@ -162,7 +162,7 @@ export default function Page1Overview() {
                 transition: 'all 0.25s ease',
               }}
             >
-              Dashboard 2
+              Overview Incidents
             </button>
           </div>
 

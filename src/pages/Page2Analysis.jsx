@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ScatterChart, Scatter, Cell, ResponsiveContainer,
@@ -98,6 +99,8 @@ function getHeatColor(rate) {
 }
 
 export default function Page2Analysis() {
+  const [descTab, setDescTab] = useState('vehicle');
+
   return (
     <div className="page-container">
 
@@ -396,8 +399,85 @@ export default function Page2Analysis() {
           Descriptive: Crash Profiles
         </h2>
 
-        <div className="three-col">
-          {/* Card A: Collision Types */}
+        {/* 3 Stat Cards */}
+        <div className="kpi-row" style={{ marginBottom: 32 }}>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Total Vehicle Incidents</div>
+            <div className="kpi-card__value">2,000,000+</div>
+            <div className="kpi-card__desc">Across all vehicle types</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Top Collision Type</div>
+            <div className="kpi-card__value">26,313</div>
+            <div className="kpi-card__desc">Side Swipe Incidents</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Highest Risk Age</div>
+            <div className="kpi-card__value">66+</div>
+            <div className="kpi-card__desc">Highest Fatality Rate</div>
+          </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
+          {[
+            { key: 'vehicle', label: 'Vehicle Type', color: '#00C9A7' },
+            { key: 'collision', label: 'Collision Types', color: '#00C9A7' },
+            { key: 'age', label: 'Age Group', color: '#00C9A7' },
+            { key: 'time', label: 'Time', color: '#FF9F43' },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setDescTab(tab.key)}
+              style={{
+                padding: '10px 24px',
+                borderRadius: '999px',
+                border: `2px solid ${descTab === tab.key ? tab.color : 'rgba(140,155,181,0.3)'}`,
+                background: descTab === tab.key ? `${tab.color}22` : 'transparent',
+                color: descTab === tab.key ? tab.color : '#8C9BB5',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                letterSpacing: '1px',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                boxShadow: descTab === tab.key ? `0 0 16px ${tab.color}18` : 'none',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Panels */}
+        {descTab === 'vehicle' && (
+          <div className="card card--blue card--glow-blue" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="chart-container__title" style={{ fontSize: '0.95rem', textAlign: 'center', width: '100%' }}>
+              Vehicle Involvement
+            </div>
+            <div className="donut-center" style={{ flex: 1 }}>
+              <div style={{
+                width: 140,
+                height: 140,
+                borderRadius: '50%',
+                border: '6px solid var(--accent-teal)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 30px rgba(0,201,167,0.15), inset 0 0 30px rgba(0,201,167,0.05)',
+              }}>
+                <span className="donut-center__value" style={{ fontSize: '1.8rem' }}>33,639</span>
+                <span className="donut-center__label" style={{ fontSize: '0.6rem' }}>MOTORCYCLES</span>
+              </div>
+            </div>
+            <div className="chart-caption" style={{ textAlign: 'center' }}>
+              SHARE OF CRASH-INVOLVED VEHICLES, NOT TOTAL FLEET DISTRIBUTION.
+            </div>
+          </div>
+        )}
+
+        {descTab === 'collision' && (
           <div className="card card--blue card--glow-blue">
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               Collision Types
@@ -435,34 +515,9 @@ export default function Page2Analysis() {
               </ResponsiveContainer>
             </div>
           </div>
+        )}
 
-          {/* Card B: Vehicle Involvement — Donut / Large Stat */}
-          <div className="card card--blue card--glow-blue" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div className="chart-container__title" style={{ fontSize: '0.95rem', textAlign: 'center', width: '100%' }}>
-              Vehicle Involvement
-            </div>
-            <div className="donut-center" style={{ flex: 1 }}>
-              <div style={{
-                width: 140,
-                height: 140,
-                borderRadius: '50%',
-                border: '6px solid var(--accent-teal)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 0 30px rgba(0,201,167,0.15), inset 0 0 30px rgba(0,201,167,0.05)',
-              }}>
-                <span className="donut-center__value" style={{ fontSize: '1.8rem' }}>33,639</span>
-                <span className="donut-center__label" style={{ fontSize: '0.6rem' }}>MOTORCYCLES</span>
-              </div>
-            </div>
-            <div className="chart-caption" style={{ textAlign: 'center' }}>
-              SHARE OF CRASH-INVOLVED VEHICLES, NOT TOTAL FLEET DISTRIBUTION.
-            </div>
-          </div>
-
-          {/* Card C: Age Brackets · 18-34 Risk */}
+        {descTab === 'age' && (
           <div className="card card--blue card--glow-blue">
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               Age Brackets · 18–34 Risk
@@ -493,7 +548,47 @@ export default function Page2Analysis() {
               </ResponsiveContainer>
             </div>
           </div>
-        </div>
+        )}
+
+        {descTab === 'time' && (
+          <div className="card card--orange card--glow-orange">
+            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
+              Fatal Rate by Hour · 10 PM–3 AM Danger Window
+            </div>
+
+            <div className="heatmap-grid" style={{ marginTop: 20 }}>
+              <div className="heatmap-row">
+                {hourRates.map((h) => (
+                  <div
+                    key={`t1-${h.hour}`}
+                    className="heatmap-cell"
+                    style={{ background: getHeatColor(h.rate) }}
+                    title={`${h.hour}:00 — Rate: ${h.rate}`}
+                  />
+                ))}
+              </div>
+              <div className="heatmap-row">
+                {hourRates.map((h) => (
+                  <div
+                    key={`t2-${h.hour}`}
+                    className="heatmap-cell"
+                    style={{ background: getHeatColor(h.rate * 0.9) }}
+                    title={`${h.hour}:00`}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="heatmap-labels">
+              {hourRates.map((h) => (
+                <span key={h.hour}>{h.hour.toString().padStart(2, '0')}</span>
+              ))}
+            </div>
+
+            <div className="chart-caption" style={{ color: '#FF6B6B' }}>
+              ■ DANGER PEAK (22:00–03:00)
+            </div>
+          </div>
+        )}
       </section>
 
       {/* FOOTER */}
