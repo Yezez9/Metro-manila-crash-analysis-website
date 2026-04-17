@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 const GIS_URLS = {
-  map12: 'https://github.com/Yezez9/Metro-manila-crash-analysis/blob/main/gis/GIS_RF_Classification.html',
-  map3: 'https://github.com/Yezez9/Metro-manila-crash-analysis/blob/main/gis/GIS_Map3_Predictive_2025.html',
+  map12: 'https://rawcdn.githack.com/Yezez9/Metro-manila-crash-analysis/main/gis/GIS_RF_Classification.html',
+  map3: 'https://rawcdn.githack.com/Yezez9/Metro-manila-crash-analysis/main/gis/GIS_Map3_Predictive_2025.html',
 };
 
 const DASHBOARD_URL = 'https://app.powerbi.com/reportEmbed?reportId=3ebd5ec3-7966-4b37-a0d6-d4c0f15812c3&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4';
@@ -32,7 +32,7 @@ export default function Page3GISPolicy() {
 
       {/* ===== GIS MAP VIEWER ===== */}
       <section id="gis-maps">
-        {/* Map Tab Switcher */}
+        {/* Map Tab Switcher — Predictive purple color */}
         <div style={{
           display: 'flex',
           gap: 8,
@@ -43,16 +43,16 @@ export default function Page3GISPolicy() {
             style={{
               padding: '10px 24px',
               borderRadius: '999px',
-              border: activeMap === 'map12' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
-              background: activeMap === 'map12' ? 'rgba(0,212,170,0.15)' : 'transparent',
-              color: activeMap === 'map12' ? '#00C9A7' : '#8C9BB5',
+              border: activeMap === 'map12' ? '2px solid #a855f7' : '2px solid rgba(140,155,181,0.3)',
+              background: activeMap === 'map12' ? 'rgba(168,85,247,0.15)' : 'transparent',
+              color: activeMap === 'map12' ? '#a855f7' : '#8C9BB5',
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: '0.78rem',
               fontWeight: 600,
               letterSpacing: '1px',
               cursor: 'pointer',
               transition: 'all 0.25s ease',
-              boxShadow: activeMap === 'map12' ? '0 0 12px rgba(0,212,170,0.4)' : 'none',
+              boxShadow: activeMap === 'map12' ? '0 0 12px rgba(168,85,247,0.4)' : 'none',
             }}
           >
             GIS Map 1+2
@@ -62,16 +62,16 @@ export default function Page3GISPolicy() {
             style={{
               padding: '10px 24px',
               borderRadius: '999px',
-              border: activeMap === 'map3' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
-              background: activeMap === 'map3' ? 'rgba(0,212,170,0.15)' : 'transparent',
-              color: activeMap === 'map3' ? '#00C9A7' : '#8C9BB5',
+              border: activeMap === 'map3' ? '2px solid #a855f7' : '2px solid rgba(140,155,181,0.3)',
+              background: activeMap === 'map3' ? 'rgba(168,85,247,0.15)' : 'transparent',
+              color: activeMap === 'map3' ? '#a855f7' : '#8C9BB5',
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: '0.78rem',
               fontWeight: 600,
               letterSpacing: '1px',
               cursor: 'pointer',
               transition: 'all 0.25s ease',
-              boxShadow: activeMap === 'map3' ? '0 0 12px rgba(0,212,170,0.4)' : 'none',
+              boxShadow: activeMap === 'map3' ? '0 0 12px rgba(168,85,247,0.4)' : 'none',
             }}
           >
             GIS Map 3
@@ -128,10 +128,6 @@ export default function Page3GISPolicy() {
             style={{ display: 'block' }}
           />
         </div>
-
-        <p className="italic-caption">
-          City proportions held constant at 2022–2024 average. GIS Map 2 is a traffic exposure proxy, not a crash density map.
-        </p>
       </section>
 
       {/* GIS MAP FULLSCREEN OVERLAY */}
@@ -314,7 +310,6 @@ export default function Page3GISPolicy() {
         }} />
 
         <div className="policy-grid">
-          {/* Card 1 */}
           <div className="policy-card">
             <div className="policy-card__icon">🚨</div>
             <div className="policy-card__title">Enforce District Zones</div>
@@ -322,8 +317,6 @@ export default function Page3GISPolicy() {
               Central and Southern districts need priority enforcement based on current risk mapping density.
             </div>
           </div>
-
-          {/* Card 2 */}
           <div className="policy-card">
             <div className="policy-card__icon">🌙</div>
             <div className="policy-card__title">Deploy Night Patrols</div>
@@ -331,8 +324,6 @@ export default function Page3GISPolicy() {
               10 PM to 3 AM fatal danger window identified as the critical intervention period for patrol dispatch.
             </div>
           </div>
-
-          {/* Card 3 */}
           <div className="policy-card">
             <div className="policy-card__icon">🏍️</div>
             <div className="policy-card__title">Motorcycle Safety Campaign</div>
@@ -340,8 +331,6 @@ export default function Page3GISPolicy() {
               33,639 cases, highest fatal rate of all vehicle types. Specific protective gear mandates recommended.
             </div>
           </div>
-
-          {/* Card 4 */}
           <div className="policy-card">
             <div className="policy-card__icon">🎓</div>
             <div className="policy-card__title">Youth Intervention Program</div>
@@ -349,8 +338,6 @@ export default function Page3GISPolicy() {
               Age 18–34 highest fatal crash bracket every year. Targeted awareness at universities and workplaces.
             </div>
           </div>
-
-          {/* Card 5 — centered */}
           <div className="policy-card policy-card--centered">
             <div className="policy-card__icon">🛣️</div>
             <div className="policy-card__title">EDSA Corridor Priority</div>
@@ -365,22 +352,12 @@ export default function Page3GISPolicy() {
       <footer className="footer" id="gis-footer">
         <div className="footer__inner">
           <div className="footer__left">
-            <p style={{
-              textTransform: 'uppercase',
-              letterSpacing: '1.5px',
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: '0.7rem',
-            }}>
-              © 2024 MMARAS Research Project. All Rights Reserved.
+            <p style={{ textTransform: 'uppercase', letterSpacing: '2px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.72rem' }}>
+              MMARAS Project · © 2024 · Bulacan State University · BS Data Science
             </p>
           </div>
           <div className="footer__right">
-            <div className="footer__left-links" style={{ justifyContent: 'flex-end' }}>
-              <a href="#">Team Members</a>
-              <a href="#">University Details</a>
-              <a href="#">Data Privacy</a>
-              <a href="#">Methodology</a>
-            </div>
+            <span className="names">LANCE · MEIJA · HANNAH · ORTEGA · JHAMIACA</span>
           </div>
         </div>
       </footer>

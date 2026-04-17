@@ -9,9 +9,95 @@ const DESC_URLS = {
   time: 'https://app.powerbi.com/reportEmbed?reportId=0a78610e-350b-423b-925c-d93f78fec777&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
 };
 
+/* Reusable fullscreen expand button */
+function ExpandBtn({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      title="Enter fullscreen"
+      style={{
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        zIndex: 10,
+        width: 36,
+        height: 36,
+        borderRadius: 8,
+        border: '1px solid rgba(0,201,167,0.3)',
+        background: 'rgba(11,20,55,0.85)',
+        color: '#00C9A7',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backdropFilter: 'blur(8px)',
+        transition: 'all 0.25s ease',
+      }}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="15 3 21 3 21 9" />
+        <polyline points="9 21 3 21 3 15" />
+        <line x1="21" y1="3" x2="14" y2="10" />
+        <line x1="3" y1="21" x2="10" y2="14" />
+      </svg>
+    </button>
+  );
+}
+
+/* Reusable fullscreen overlay for images */
+function ImageOverlay({ src, alt, onClose }) {
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      zIndex: 9999,
+      background: 'rgba(0,0,0,0.92)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 40,
+    }}>
+      <button
+        onClick={onClose}
+        title="Exit fullscreen"
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+          zIndex: 10000,
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          border: '1px solid rgba(0,201,167,0.4)',
+          background: 'rgba(20,28,56,0.9)',
+          color: '#00C9A7',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '1.2rem',
+          fontWeight: 700,
+          transition: 'all 0.25s ease',
+        }}
+      >
+        ✕
+      </button>
+      <img
+        src={src}
+        alt={alt}
+        style={{ maxWidth: '95vw', maxHeight: '90vh', borderRadius: '8px', objectFit: 'contain' }}
+      />
+    </div>
+  );
+}
+
 export default function Page2Analysis() {
   const [descTab, setDescTab] = useState('vehicle');
   const [descFullscreen, setDescFullscreen] = useState(false);
+  const [fullImg, setFullImg] = useState(null); // { src, alt }
 
   return (
     <div className="page-container">
@@ -23,8 +109,9 @@ export default function Page2Analysis() {
         </h2>
 
         <div className="two-col">
-          {/* Card A: RF Feature Importance — Real Image */}
-          <div className="card card--orange card--glow-orange">
+          {/* Card A: RF Feature Importance */}
+          <div className="card card--orange card--glow-orange" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/rf_feature_importance.png`, alt: 'RF Feature Importance' })} />
             <div className="chart-container__title" style={{ fontSize: '1rem' }}>
               RF Feature Importance — Top 3 Predictors
             </div>
@@ -40,23 +127,21 @@ export default function Page2Analysis() {
             </div>
           </div>
 
-          {/* Card B: AADT vs Crash Volume — Placeholder */}
-          <div className="card card--orange card--glow-orange">
+          {/* Card B: AADT vs Crash Volume */}
+          <div className="card card--orange card--glow-orange" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/aadt_scatter.png`, alt: 'AADT vs Incident' })} />
             <div className="chart-container__title" style={{ fontSize: '1rem' }}>
-              AADT vs Crash Volume (2017–2024)
+              AADT vs Crash Volume (2016–2024)
             </div>
-            <div className="placeholder-slot" style={{
-              marginTop: 20,
-              minHeight: '220px',
-              borderColor: 'rgba(255,159,67,0.4)',
-            }}>
-              <div className="placeholder-slot__icon">📊</div>
-              <div className="placeholder-slot__label">
-                AADT SCATTER PLOT — DROP IMAGE HERE
-              </div>
+            <div style={{ marginTop: 20 }}>
+              <img
+                src={`${BASE}images/aadt_scatter.png`}
+                alt="AADT vs Incident Scatter Plot"
+                style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+              />
             </div>
             <div className="chart-caption">
-              PRE-COVID: R = +0.94 (BLUE) · COVID/POST: R = −0.36 (RED) · TWO-REGIME ANALYSIS
+              PRE-COVID: r = +0.963 (BLUE) · COVID/POST: r = −0.417 (RED) · TWO-REGIME ANALYSIS
             </div>
           </div>
         </div>
@@ -74,7 +159,8 @@ export default function Page2Analysis() {
           gap: 24,
         }}>
           {/* Card A: District Hotspot Classifier — RF Confusion Matrix */}
-          <div className="card card--purple card--glow-purple">
+          <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/rf_confusion_matrix.png`, alt: 'RF Confusion Matrix' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               District Hotspot Classifier
             </div>
@@ -93,31 +179,30 @@ export default function Page2Analysis() {
             </div>
           </div>
 
-          {/* Card B: Age-Group Fatal Risk (LogReg) — Placeholder */}
-          <div className="card card--purple card--glow-purple">
+          {/* Card B: Age-Group Fatal Risk (LogReg) */}
+          <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/logreg_auc_roc.jpg`, alt: 'Logistic Regression AUC-ROC' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               Age-Group Fatal Risk (LogReg)
             </div>
             <div className="metric-display" style={{ color: '#9B59B6', marginTop: 12 }}>
-              ACCURACY: 0.900 · AUC-ROC: 0.975
+              ACCURACY: 0.900 · AUC-ROC: 0.978
             </div>
-            <div className="placeholder-slot" style={{
-              marginTop: 16,
-              minHeight: '200px',
-              borderColor: 'rgba(155,89,182,0.4)',
-            }}>
-              <div className="placeholder-slot__icon">📈</div>
-              <div className="placeholder-slot__label">
-                AUC-ROC CURVE PNG — DROP IMAGE HERE
-              </div>
+            <div style={{ marginTop: 16 }}>
+              <img
+                src={`${BASE}images/logreg_auc_roc.jpg`}
+                alt="Logistic Regression — Fatal Crash Age Risk"
+                style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+              />
             </div>
             <div className="chart-caption">
-              RECEIVER OPERATING CHARACTERISTIC CURVE
+              PREDICTED RISK PROBABILITY BY AGE BRACKET · AUC-ROC CURVE
             </div>
           </div>
 
           {/* Card C: RF Classification Output — Per City (2025) */}
-          <div className="card card--purple card--glow-purple">
+          <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/rf_classification_output.png`, alt: 'RF Classification Output' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
               RF Classification Output — Per City (2025)
             </div>
@@ -136,33 +221,27 @@ export default function Page2Analysis() {
             </div>
           </div>
 
-          {/* Card D: Prophet Forecast 2025 — PLACEHOLDER */}
-          <div className="card card--purple card--glow-purple" style={{ padding: 0, overflow: 'hidden' }}>
-            <div style={{ padding: '20px 24px 12px' }}>
-              <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
-                Prophet Forecast 2025
-              </div>
+          {/* Card D: Prophet Forecast 2025 */}
+          <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
+            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/prophet_forecast.jpg`, alt: 'Prophet Forecast 2025' })} />
+            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
+              Prophet Forecast 2025
             </div>
-            <div className="placeholder-slot" style={{
-              margin: '0 20px',
-              minHeight: '200px',
-              borderColor: 'rgba(155,89,182,0.4)',
-            }}>
-              <div className="placeholder-slot__icon">📉</div>
-              <div className="placeholder-slot__label">
-                PROPHET FORECAST PNG — DROP IMAGE HERE
-              </div>
+            <div style={{ marginTop: 16 }}>
+              <img
+                src={`${BASE}images/prophet_forecast.jpg`}
+                alt="2025 Forecast — Trained on Full 2015-2024 Data"
+                style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+              />
             </div>
-            <div style={{ padding: '12px 24px 20px' }}>
-              <div className="chart-caption" style={{ borderTop: 'none', marginTop: 8, paddingTop: 0 }}>
-                2025 MONTHLY FORECAST · MAE/RMSE/MAPE EVALUATED ON 2024 HOLDOUT
-              </div>
+            <div className="chart-caption">
+              2025 MONTHLY FORECAST · FATAL · NON-FATAL · DAMAGE TO PROPERTY · GRAND TOTAL
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== SECTION 4: DESCRIPTIVE — CRASH PROFILES ===== */}
+      {/* ===== SECTION 3: DESCRIPTIVE — CRASH PROFILES ===== */}
       <section className="section" id="analysis-descriptive">
         <h2 className="section-header section-header--blue">
           Descriptive: Crash Profiles
@@ -187,7 +266,7 @@ export default function Page2Analysis() {
           </div>
         </div>
 
-        {/* Tab Switcher — matches Overview District/Incidents style */}
+        {/* Tab Switcher */}
         <div style={{
           display: 'flex',
           gap: 8,
@@ -226,7 +305,7 @@ export default function Page2Analysis() {
           })}
         </div>
 
-        {/* Iframe container — matches Overview dashboard container */}
+        {/* Iframe container */}
         <div style={{
           width: '100%',
           borderRadius: '8px',
@@ -235,37 +314,7 @@ export default function Page2Analysis() {
           boxShadow: '0 0 24px rgba(0,201,167,0.06)',
           position: 'relative',
         }}>
-          {/* Fullscreen toggle */}
-          <button
-            onClick={() => setDescFullscreen(true)}
-            title="Enter fullscreen"
-            style={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              zIndex: 10,
-              width: 36,
-              height: 36,
-              borderRadius: 8,
-              border: '1px solid rgba(0,201,167,0.3)',
-              background: 'rgba(11,20,55,0.85)',
-              color: '#00C9A7',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backdropFilter: 'blur(8px)',
-              transition: 'all 0.25s ease',
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 3 21 3 21 9" />
-              <polyline points="9 21 3 21 3 15" />
-              <line x1="21" y1="3" x2="14" y2="10" />
-              <line x1="3" y1="21" x2="10" y2="14" />
-            </svg>
-          </button>
-
+          <ExpandBtn onClick={() => setDescFullscreen(true)} />
           <iframe
             title="Descriptive Dashboard"
             width="100%"
@@ -278,7 +327,7 @@ export default function Page2Analysis() {
         </div>
       </section>
 
-      {/* FULLSCREEN OVERLAY — Descriptive */}
+      {/* DESCRIPTIVE FULLSCREEN OVERLAY */}
       {descFullscreen && (
         <div style={{
           position: 'fixed',
@@ -334,23 +383,20 @@ export default function Page2Analysis() {
         </div>
       )}
 
+      {/* IMAGE FULLSCREEN OVERLAY */}
+      {fullImg && (
+        <ImageOverlay src={fullImg.src} alt={fullImg.alt} onClose={() => setFullImg(null)} />
+      )}
+
       {/* FOOTER */}
       <footer className="footer" id="analysis-footer">
         <div className="footer__inner">
           <div className="footer__left">
-            <h3>MMARAS Project</h3>
-            <p>© 2024 · Bulacan State University · BS Data Science</p>
-            <div className="footer__left-links">
-              <a href="#">Team Members</a>
-              <a href="#">Academic Affiliation</a>
-              <a href="#">Publications</a>
-              <a href="#">Contact</a>
-            </div>
+            <p style={{ textTransform: 'uppercase', letterSpacing: '2px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.72rem' }}>
+              MMARAS Project · © 2024 · Bulacan State University · BS Data Science
+            </p>
           </div>
           <div className="footer__right">
-            <p style={{ fontSize: '0.68rem', letterSpacing: '1.5px', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace" }}>
-              Lead Researchers:
-            </p>
             <span className="names">LANCE · MEIJA · HANNAH · ORTEGA · JHAMIACA</span>
           </div>
         </div>
