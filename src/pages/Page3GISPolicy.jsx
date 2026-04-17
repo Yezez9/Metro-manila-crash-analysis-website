@@ -1,4 +1,17 @@
+import { useState } from 'react';
+
+const GIS_URLS = {
+  map12: 'https://github.com/Yezez9/Metro-manila-crash-analysis/blob/main/gis/GIS_RF_Classification.html',
+  map3: 'https://github.com/Yezez9/Metro-manila-crash-analysis/blob/main/gis/GIS_Map3_Predictive_2025.html',
+};
+
+const DASHBOARD_URL = 'https://app.powerbi.com/reportEmbed?reportId=3ebd5ec3-7966-4b37-a0d6-d4c0f15812c3&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4';
+
 export default function Page3GISPolicy() {
+  const [activeMap, setActiveMap] = useState('map12');
+  const [mapFullscreen, setMapFullscreen] = useState(false);
+  const [dashFullscreen, setDashFullscreen] = useState(false);
+
   return (
     <div className="page-container">
 
@@ -17,89 +30,103 @@ export default function Page3GISPolicy() {
         }} />
       </section>
 
-      {/* ===== GIS PLACEHOLDER CARDS ===== */}
+      {/* ===== GIS MAP VIEWER ===== */}
       <section id="gis-maps">
-        <div className="three-col">
-          {/* Card 1: District Fatal Choropleth — LIVE INTERACTIVE MAP */}
-          <div className="gis-card" style={{ gridColumn: '1 / -1' }}>
-            <div className="gis-card__header">
-              <div className="gis-card__icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <span className="gis-card__tag">SPATIAL LAYER 01 · INTERACTIVE</span>
-            </div>
+        {/* Map Tab Switcher */}
+        <div style={{
+          display: 'flex',
+          gap: 8,
+          marginBottom: 20,
+        }}>
+          <button
+            onClick={() => setActiveMap('map12')}
+            style={{
+              padding: '10px 24px',
+              borderRadius: '999px',
+              border: activeMap === 'map12' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
+              background: activeMap === 'map12' ? 'rgba(0,212,170,0.15)' : 'transparent',
+              color: activeMap === 'map12' ? '#00C9A7' : '#8C9BB5',
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              boxShadow: activeMap === 'map12' ? '0 0 12px rgba(0,212,170,0.4)' : 'none',
+            }}
+          >
+            GIS Map 1+2
+          </button>
+          <button
+            onClick={() => setActiveMap('map3')}
+            style={{
+              padding: '10px 24px',
+              borderRadius: '999px',
+              border: activeMap === 'map3' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
+              background: activeMap === 'map3' ? 'rgba(0,212,170,0.15)' : 'transparent',
+              color: activeMap === 'map3' ? '#00C9A7' : '#8C9BB5',
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              boxShadow: activeMap === 'map3' ? '0 0 12px rgba(0,212,170,0.4)' : 'none',
+            }}
+          >
+            GIS Map 3
+          </button>
+        </div>
 
-            <div style={{
-              width: '100%',
-              height: '500px',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              margin: '0 0 8px 0',
-              border: '1px solid rgba(0,201,167,0.15)',
-            }}>
-              <iframe
-                src="/GIS_Map1_District_Fatal_Choropleth.html"
-                title="GIS Map 1 · District Fatal Choropleth"
-                width="100%"
-                height="100%"
-                style={{ border: 'none' }}
-                loading="lazy"
-              />
-            </div>
+        {/* Map Container */}
+        <div style={{
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: '1px solid rgba(0,201,167,0.15)',
+          boxShadow: '0 0 24px rgba(0,201,167,0.06)',
+          position: 'relative',
+        }}>
+          {/* Fullscreen toggle */}
+          <button
+            onClick={() => setMapFullscreen(true)}
+            title="Enter fullscreen"
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              zIndex: 10,
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              border: '1px solid rgba(0,201,167,0.3)',
+              background: 'rgba(11,20,55,0.85)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backdropFilter: 'blur(8px)',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg>
+          </button>
 
-            <div className="gis-card__body">
-              <div className="gis-card__title">GIS Map 1 · District Fatal Choropleth</div>
-              <div className="gis-card__subtitle">Central &amp; Southern Districts = Highest Risk · Pan &amp; zoom to explore district boundaries</div>
-            </div>
-          </div>
-
-          {/* Card 2: AADT Corridor Exposure */}
-          <div className="gis-card">
-            <div className="gis-card__header">
-              <div className="gis-card__icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 12h4l3-9 4 18 3-9h4" />
-                </svg>
-              </div>
-              <span className="gis-card__tag">EXPOSURE LAYER 02</span>
-            </div>
-
-            <div className="gis-card__placeholder">
-              <div className="gis-card__placeholder-icon">🛣️</div>
-              <span className="gis-card__filename">AADT_CORRIDOR_MATRIX</span>
-            </div>
-
-            <div className="gis-card__body">
-              <div className="gis-card__title">GIS Map 2 · AADT Corridor Exposure · 20 Roads</div>
-              <div className="gis-card__subtitle">EDSA: 419,952 vehicles/day</div>
-            </div>
-          </div>
-
-          {/* Card 3: Prophet 2025 Predictive */}
-          <div className="gis-card">
-            <div className="gis-card__header">
-              <div className="gis-card__icon-wrap">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                  <polyline points="17 6 23 6 23 12" />
-                </svg>
-              </div>
-              <span className="gis-card__tag">PREDICTION LAYER 03</span>
-            </div>
-
-            <div className="gis-card__placeholder">
-              <div className="gis-card__placeholder-icon">📊</div>
-              <span className="gis-card__filename">PROPHET_2025_T5</span>
-            </div>
-
-            <div className="gis-card__body">
-              <div className="gis-card__title">GIS Map 3 + Prophet 2025 · Predictive City Risk Choropleth</div>
-              <div className="gis-card__subtitle">17 Cities</div>
-            </div>
-          </div>
+          <iframe
+            title="GIS Map Viewer"
+            width="100%"
+            height="600"
+            src={GIS_URLS[activeMap]}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ display: 'block' }}
+          />
         </div>
 
         <p className="italic-caption">
@@ -107,33 +134,172 @@ export default function Page3GISPolicy() {
         </p>
       </section>
 
+      {/* GIS MAP FULLSCREEN OVERLAY */}
+      {mapFullscreen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999,
+          background: 'rgba(0,0,0,0.95)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <button
+            onClick={() => setMapFullscreen(false)}
+            title="Exit fullscreen"
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              zIndex: 10000,
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(0,201,167,0.4)',
+              background: 'rgba(20,28,56,0.9)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              fontWeight: 700,
+              transition: 'all 0.25s ease',
+            }}
+          >
+            ✕
+          </button>
+          <iframe
+            title="GIS Map Fullscreen"
+            width="100%"
+            height="100%"
+            src={GIS_URLS[activeMap]}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{
+              display: 'block',
+              border: 'none',
+              width: '100vw',
+              height: '100vh',
+            }}
+          />
+        </div>
+      )}
+
       {/* ===== POWER BI DASHBOARD ===== */}
       <section className="section" id="gis-powerbi">
-        <h2 className="section__title" style={{ fontSize: '1.5rem' }}>Explore the Live Dashboard</h2>
-        <p className="section__subtitle" style={{ marginBottom: 28 }}>
-          Power BI · All four analytics layers · Use slicers to filter by year, city, and district.
-        </p>
+        <h2 className="section__title" style={{ fontSize: '1.5rem', marginBottom: 20 }}>Explore the Live Dashboard</h2>
 
-        <div className="powerbi-placeholder">
-          {/* Power BI icon */}
-          <div className="powerbi-placeholder__icon">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="8" y="28" width="10" height="28" rx="2" fill="#00C9A7" opacity="0.5" />
-              <rect x="22" y="18" width="10" height="38" rx="2" fill="#00C9A7" opacity="0.7" />
-              <rect x="36" y="8" width="10" height="48" rx="2" fill="#00C9A7" opacity="0.85" />
-              <rect x="50" y="14" width="10" height="42" rx="2" fill="#00C9A7" />
-              <circle cx="56" cy="10" r="4" fill="#1E90FF" />
+        <div style={{
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: '1px solid rgba(0,201,167,0.15)',
+          boxShadow: '0 0 24px rgba(0,201,167,0.06)',
+          position: 'relative',
+        }}>
+          {/* Fullscreen toggle */}
+          <button
+            onClick={() => setDashFullscreen(true)}
+            title="Enter fullscreen"
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              zIndex: 10,
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              border: '1px solid rgba(0,201,167,0.3)',
+              background: 'rgba(11,20,55,0.85)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backdropFilter: 'blur(8px)',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
             </svg>
-          </div>
-          <div className="powerbi-placeholder__title">Power BI Embedded Dashboard</div>
-          <div className="powerbi-placeholder__desc">
-            (Interactive · Published via Power BI Service · Session Token Required for Data Access)
-          </div>
-          <a href="#" className="btn-dashboard">
-            Open Full Dashboard ↗
-          </a>
+          </button>
+
+          <iframe
+            title="MMARAS Live Dashboard"
+            width="100%"
+            height="541"
+            src={DASHBOARD_URL}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ display: 'block' }}
+          />
         </div>
       </section>
+
+      {/* DASHBOARD FULLSCREEN OVERLAY */}
+      {dashFullscreen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999,
+          background: 'rgba(0,0,0,0.95)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <button
+            onClick={() => setDashFullscreen(false)}
+            title="Exit fullscreen"
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              zIndex: 10000,
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(0,201,167,0.4)',
+              background: 'rgba(20,28,56,0.9)',
+              color: '#00C9A7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.2rem',
+              fontWeight: 700,
+              transition: 'all 0.25s ease',
+            }}
+          >
+            ✕
+          </button>
+          <iframe
+            title="Dashboard Fullscreen"
+            width="100%"
+            height="100%"
+            src={DASHBOARD_URL}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{
+              display: 'block',
+              border: 'none',
+              width: '100vw',
+              height: '100vh',
+            }}
+          />
+        </div>
+      )}
 
       {/* ===== PRESCRIPTIVE INSIGHTS ===== */}
       <section className="section" id="gis-prescriptive">
