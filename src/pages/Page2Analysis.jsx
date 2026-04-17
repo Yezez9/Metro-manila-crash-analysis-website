@@ -286,28 +286,7 @@ export default function Page2Analysis() {
             </div>
           </div>
 
-          {/* Card C: RF Classification Output — Per City (2025) */}
-          <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
-            <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/rf_classification_output.png`, alt: 'RF Classification Output' })} />
-            <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
-              RF Classification Output — Per City (2025)
-            </div>
-            <div className="metric-display" style={{ color: '#9B59B6', marginTop: 12 }}>
-              CV ACCURACY: 0.782 · F1: 0.776
-            </div>
-            <div style={{ marginTop: 16 }}>
-              <img
-                src={`${BASE}images/rf_classification_output.png`}
-                alt="RF Classification Output Per City 2025"
-                style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
-              />
-            </div>
-            <div className="chart-caption">
-              DISTRICT RISK CLASSIFICATION — HIGH vs LOW RISK PER CITY
-            </div>
-          </div>
-
-          {/* Card D: Prophet Forecast 2025 */}
+          {/* Card C: Prophet Forecast 2025 */}
           <div className="card card--purple card--glow-purple" style={{ position: 'relative' }}>
             <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/prophet_forecast.png`, alt: 'Prophet Forecast 2025' })} />
             <div className="chart-container__title" style={{ fontSize: '0.95rem' }}>
