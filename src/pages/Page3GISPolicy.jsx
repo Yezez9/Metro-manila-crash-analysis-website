@@ -312,37 +312,37 @@ export default function Page3GISPolicy() {
         <div className="policy-grid">
           <div className="policy-card">
             <div className="policy-card__icon">🚨</div>
-            <div className="policy-card__title">Enforce District Zones</div>
+            <div className="policy-card__title">Deploy More Patrols from 10 PM to 3 AM</div>
             <div className="policy-card__desc">
-              Central and Southern districts need priority enforcement based on current risk mapping density.
+              Deploy More Patrols from 10 PM to 3 AM in High-Risk Districts. Traffic patrol operations should be intensified between 10 PM and 3 AM, particularly in Central and Southern districts where fatalities are highest.
             </div>
           </div>
           <div className="policy-card">
             <div className="policy-card__icon">🌙</div>
-            <div className="policy-card__title">Deploy Night Patrols</div>
+            <div className="policy-card__title">Prioritize Enforcement in 11 High-Risk Cities</div>
             <div className="policy-card__desc">
-              10 PM to 3 AM fatal danger window identified as the critical intervention period for patrol dispatch.
+              Prioritize Traffic Enforcement in 11 High-Risk Cities. Traffic enforcement resources should be concentrated in identified high-risk cities such as Quezon City, Manila, Pasig, Makati, Taguig, and others flagged by the model.
             </div>
           </div>
           <div className="policy-card">
             <div className="policy-card__icon">🏍️</div>
-            <div className="policy-card__title">Motorcycle Safety Campaign</div>
+            <div className="policy-card__title">Implement a Motorcycle Safety Program</div>
             <div className="policy-card__desc">
-              33,639 cases, highest fatal rate of all vehicle types. Specific protective gear mandates recommended.
+              Implement a Dedicated Motorcycle Safety Program. A targeted safety program for motorcycle users should be established, including stricter enforcement and dedicated infrastructure such as motorcycle lanes.
             </div>
           </div>
           <div className="policy-card">
             <div className="policy-card__icon">🎓</div>
-            <div className="policy-card__title">Youth Intervention Program</div>
+            <div className="policy-card__title">Develop Age-Specific Safety Programs (52+)</div>
             <div className="policy-card__desc">
-              Age 18–34 highest fatal crash bracket every year. Targeted awareness at universities and workplaces.
+              Develop Age-Specific Safety Programs for Drivers Aged 52 and Above. Specialized safety measures should be designed for older drivers, including regular fitness checks and improved road conditions.
             </div>
           </div>
           <div className="policy-card policy-card--centered">
             <div className="policy-card__icon">🛣️</div>
-            <div className="policy-card__title">EDSA Corridor Priority</div>
+            <div className="policy-card__title">Intensify Enforcement During Peak Months</div>
             <div className="policy-card__desc">
-              419,952 vehicles/day, highest traffic exposure in Metro Manila. Dedicated rapid response units required.
+              Intensify Enforcement During Peak Months (July–August and January–February). Traffic enforcement campaigns should be strengthened before and during peak months with consistently high accident volumes.
             </div>
           </div>
         </div>

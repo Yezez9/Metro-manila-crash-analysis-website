@@ -15,7 +15,7 @@ export default function Page1Overview() {
       <section className="hero" id="overview-hero">
         <h1 className="hero__heading">MMARAS</h1>
         <p className="hero__subtitle">
-          Metro Manila Road Traffic Crash Analysis System · 2015–2024
+          Spatiotemporal Analysis and Predictive Modeling of Road Traffic Incidents in Metro Manila: A Machine Learning and GIS Approach Using MMARAS &amp; AADT Data (2015-2024)
         </p>
       </section>
 
@@ -55,9 +55,9 @@ export default function Page1Overview() {
             interventions. The goal is to move beyond reactionary measures toward a
             predictive and prescriptive paradigm for urban safety management.
           </p>
-          <button className="btn-cta" onClick={() => {}}>
+          <a className="btn-cta" href="https://drive.google.com/drive/folders/1vBFQNu34H9UYX8JOoPBcMZMQJEHv1PG7" target="_blank" rel="noopener noreferrer">
             Access Research Data 🗄
-          </button>
+          </a>
         </div>
 
         <div className="layer-grid">
