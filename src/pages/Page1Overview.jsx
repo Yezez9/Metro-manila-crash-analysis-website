@@ -133,15 +133,16 @@ export default function Page1Overview() {
               style={{
                 padding: '10px 24px',
                 borderRadius: '999px',
-                border: activeDash === 'dash1' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
-                background: activeDash === 'dash1' ? '#00C9A7' : 'transparent',
-                color: activeDash === 'dash1' ? '#0B1437' : '#8C9BB5',
+                border: activeDash === 'dash1' ? '2px solid #1E90FF' : '2px solid rgba(140,155,181,0.3)',
+                background: activeDash === 'dash1' ? 'rgba(30,144,255,0.15)' : 'transparent',
+                color: activeDash === 'dash1' ? '#1E90FF' : '#8C9BB5',
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: '0.78rem',
                 fontWeight: 600,
                 letterSpacing: '1px',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
+                boxShadow: activeDash === 'dash1' ? '0 0 12px rgba(30,144,255,0.4)' : 'none',
               }}
             >
               Overview District
@@ -151,15 +152,16 @@ export default function Page1Overview() {
               style={{
                 padding: '10px 24px',
                 borderRadius: '999px',
-                border: activeDash === 'dash2' ? '2px solid #00C9A7' : '2px solid rgba(140,155,181,0.3)',
-                background: activeDash === 'dash2' ? '#00C9A7' : 'transparent',
-                color: activeDash === 'dash2' ? '#0B1437' : '#8C9BB5',
+                border: activeDash === 'dash2' ? '2px solid #1E90FF' : '2px solid rgba(140,155,181,0.3)',
+                background: activeDash === 'dash2' ? 'rgba(30,144,255,0.15)' : 'transparent',
+                color: activeDash === 'dash2' ? '#1E90FF' : '#8C9BB5',
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: '0.78rem',
                 fontWeight: 600,
                 letterSpacing: '1px',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
+                boxShadow: activeDash === 'dash2' ? '0 0 12px rgba(30,144,255,0.4)' : 'none',
               }}
             >
               Overview Incidents

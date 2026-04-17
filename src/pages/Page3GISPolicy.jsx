@@ -23,7 +23,7 @@ export default function Page3GISPolicy() {
         <div style={{
           width: 120,
           height: 3,
-          background: 'var(--accent-teal)',
+          background: '#9B59B6',
           marginTop: 12,
           borderRadius: 2,
           marginBottom: 40,
@@ -188,7 +188,7 @@ export default function Page3GISPolicy() {
 
       {/* ===== POWER BI DASHBOARD ===== */}
       <section className="section" id="gis-powerbi">
-        <h2 className="section__title" style={{ fontSize: '1.5rem', marginBottom: 20 }}>Explore the Live Dashboard</h2>
+        <h2 style={{ fontSize: '1.5rem', marginBottom: 20, color: '#2ECC71', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, letterSpacing: '1.5px' }}>Explore the Live Dashboard</h2>
 
         <div style={{
           width: '100%',

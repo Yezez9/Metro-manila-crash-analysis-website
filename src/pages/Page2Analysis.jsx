@@ -102,7 +102,93 @@ export default function Page2Analysis() {
   return (
     <div className="page-container">
 
-      {/* ===== SECTION 1: DIAGNOSTIC — WHAT DRIVES CRASHES ===== */}
+      {/* ===== SECTION 1: DESCRIPTIVE — INCIDENT PROFILES ===== */}
+      <section className="section" id="analysis-descriptive">
+        <h2 className="section-header section-header--blue">
+          Descriptive: Incident Profiles
+        </h2>
+
+        {/* 3 Stat Cards */}
+        <div className="kpi-row" style={{ marginBottom: 32 }}>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Total Vehicle Incidents</div>
+            <div className="kpi-card__value">2,000,000+</div>
+            <div className="kpi-card__desc">Across all vehicle types</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Top Collision Type</div>
+            <div className="kpi-card__value">26,313</div>
+            <div className="kpi-card__desc">Side Swipe Incidents</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-card__label">Highest Risk Age</div>
+            <div className="kpi-card__value">66+</div>
+            <div className="kpi-card__desc">Highest Fatality Rate</div>
+          </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div style={{
+          display: 'flex',
+          gap: 8,
+          marginBottom: 20,
+          flexWrap: 'wrap',
+        }}>
+          {[
+            { key: 'vehicle', label: 'Vehicle Type', activeColor: '#1E90FF', activeBg: 'rgba(30,144,255,0.15)', glowColor: 'rgba(30,144,255,0.4)' },
+            { key: 'collision', label: 'Collision Types', activeColor: '#1E90FF', activeBg: 'rgba(30,144,255,0.15)', glowColor: 'rgba(30,144,255,0.4)' },
+            { key: 'age', label: 'Age Group', activeColor: '#1E90FF', activeBg: 'rgba(30,144,255,0.15)', glowColor: 'rgba(30,144,255,0.4)' },
+            { key: 'time', label: 'Time', activeColor: '#1E90FF', activeBg: 'rgba(30,144,255,0.15)', glowColor: 'rgba(30,144,255,0.4)' },
+          ].map((tab) => {
+            const isActive = descTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setDescTab(tab.key)}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '999px',
+                  border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(140,155,181,0.3)',
+                  background: isActive ? tab.activeBg : 'transparent',
+                  color: isActive ? tab.activeColor : '#8C9BB5',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                  letterSpacing: '1px',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  boxShadow: isActive ? `0 0 12px ${tab.glowColor}` : 'none',
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Iframe container */}
+        <div style={{
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: '1px solid rgba(30,144,255,0.15)',
+          boxShadow: '0 0 24px rgba(30,144,255,0.06)',
+          position: 'relative',
+        }}>
+          <ExpandBtn onClick={() => setDescFullscreen(true)} />
+          <iframe
+            title="Descriptive Dashboard"
+            width="100%"
+            height="600"
+            src={DESC_URLS[descTab]}
+            frameBorder="0"
+            allowFullScreen={true}
+            style={{ display: 'block' }}
+          />
+        </div>
+      </section>
+
+      {/* ===== SECTION 2: DIAGNOSTIC — WHAT DRIVES INCIDENTS ===== */}
       <section className="section" id="analysis-diagnostic-drivers">
         <h2 className="section-header section-header--orange">
           Diagnostic: What Drives Incidents?
@@ -127,7 +213,7 @@ export default function Page2Analysis() {
             </div>
           </div>
 
-          {/* Card B: AADT vs Crash Volume */}
+          {/* Card B: AADT vs Incident Volume */}
           <div className="card card--orange card--glow-orange" style={{ position: 'relative' }}>
             <ExpandBtn onClick={() => setFullImg({ src: `${BASE}images/aadt_scatter.png`, alt: 'AADT vs Incident' })} />
             <div className="chart-container__title" style={{ fontSize: '1rem' }}>
@@ -147,7 +233,7 @@ export default function Page2Analysis() {
         </div>
       </section>
 
-      {/* ===== SECTION 2: PREDICTIVE — MACHINE LEARNING (2x2 GRID) ===== */}
+      {/* ===== SECTION 3: PREDICTIVE — MACHINE LEARNING (2x2 GRID) ===== */}
       <section className="section" id="analysis-predictive">
         <h2 className="section-header section-header--purple">
           Predictive: Machine Learning Models
@@ -238,92 +324,6 @@ export default function Page2Analysis() {
               2025 MONTHLY FORECAST · FATAL · NON-FATAL · DAMAGE TO PROPERTY · GRAND TOTAL
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ===== SECTION 3: DESCRIPTIVE — CRASH PROFILES ===== */}
-      <section className="section" id="analysis-descriptive">
-        <h2 className="section-header section-header--blue">
-          Descriptive: Incident Profiles
-        </h2>
-
-        {/* 3 Stat Cards */}
-        <div className="kpi-row" style={{ marginBottom: 32 }}>
-          <div className="kpi-card">
-            <div className="kpi-card__label">Total Vehicle Incidents</div>
-            <div className="kpi-card__value">2,000,000+</div>
-            <div className="kpi-card__desc">Across all vehicle types</div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-card__label">Top Collision Type</div>
-            <div className="kpi-card__value">26,313</div>
-            <div className="kpi-card__desc">Side Swipe Incidents</div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-card__label">Highest Risk Age</div>
-            <div className="kpi-card__value">66+</div>
-            <div className="kpi-card__desc">Highest Fatality Rate</div>
-          </div>
-        </div>
-
-        {/* Tab Switcher */}
-        <div style={{
-          display: 'flex',
-          gap: 8,
-          marginBottom: 20,
-          flexWrap: 'wrap',
-        }}>
-          {[
-            { key: 'vehicle', label: 'Vehicle Type', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
-            { key: 'collision', label: 'Collision Types', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
-            { key: 'age', label: 'Age Group', activeColor: '#00C9A7', activeBg: 'rgba(0,212,170,0.15)', glowColor: 'rgba(0,212,170,0.4)' },
-            { key: 'time', label: 'Time', activeColor: '#f59e0b', activeBg: 'rgba(245,158,11,0.15)', glowColor: 'rgba(245,158,11,0.4)' },
-          ].map((tab) => {
-            const isActive = descTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setDescTab(tab.key)}
-                style={{
-                  padding: '10px 24px',
-                  borderRadius: '999px',
-                  border: isActive ? `2px solid ${tab.activeColor}` : '2px solid rgba(140,155,181,0.3)',
-                  background: isActive ? tab.activeBg : 'transparent',
-                  color: isActive ? tab.activeColor : '#8C9BB5',
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  letterSpacing: '1px',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s ease',
-                  boxShadow: isActive ? `0 0 12px ${tab.glowColor}` : 'none',
-                }}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Iframe container */}
-        <div style={{
-          width: '100%',
-          borderRadius: '8px',
-          overflow: 'hidden',
-          border: '1px solid rgba(0,201,167,0.15)',
-          boxShadow: '0 0 24px rgba(0,201,167,0.06)',
-          position: 'relative',
-        }}>
-          <ExpandBtn onClick={() => setDescFullscreen(true)} />
-          <iframe
-            title="Descriptive Dashboard"
-            width="100%"
-            height="600"
-            src={DESC_URLS[descTab]}
-            frameBorder="0"
-            allowFullScreen={true}
-            style={{ display: 'block' }}
-          />
         </div>
       </section>
 
