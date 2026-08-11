@@ -12,6 +12,8 @@ const FALLBACK_IMGS = {
   dash2: 'overview-incidents-fallback.png',
 };
 
+const CACHE_BUSTER = Date.now();
+
 export default function Page1Overview() {
   const [activeDash, setActiveDash] = useState('dash1');
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -247,7 +249,7 @@ export default function Page1Overview() {
               <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d', position: 'relative' }}>
                 <img
                   key={activeDash}
-                  src={`${BASE}images/${FALLBACK_IMGS[activeDash]}`}
+                  src={`${BASE}images/${FALLBACK_IMGS[activeDash]}?v=${CACHE_BUSTER}`}
                   alt={activeDash === 'dash1' ? 'Overview District Dashboard' : 'Overview Incidents Dashboard'}
                   style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
                   onError={(e) => {
