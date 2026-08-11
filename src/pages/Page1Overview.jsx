@@ -244,12 +244,41 @@ export default function Page1Overview() {
 
             {/* Conditional: iframe (live) or static image (fallback) */}
             {imageMode ? (
-              <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d' }}>
+              <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d', position: 'relative' }}>
                 <img
+                  key={activeDash}
                   src={`${BASE}images/${FALLBACK_IMGS[activeDash]}`}
                   alt={activeDash === 'dash1' ? 'Overview District Dashboard' : 'Overview Incidents Dashboard'}
                   style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                  onLoad={(e) => {
+                    e.target.style.display = 'block';
+                    if (e.target.nextSibling) e.target.nextSibling.style.display = 'none';
+                  }}
                 />
+                {/* Graceful fallback if image fails to load */}
+                <div style={{
+                  display: 'none',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 12,
+                  color: '#8C9BB5',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '0.85rem',
+                  textAlign: 'center',
+                }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8C9BB5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  <span>Image not available yet</span>
+                  <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>Drop the file into public/images/ and redeploy</span>
+                </div>
               </div>
             ) : (
               <iframe
