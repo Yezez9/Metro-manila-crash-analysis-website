@@ -123,7 +123,7 @@ export default function Page1Overview() {
       </section>
 
       {/* INTERACTIVE POWER BI DASHBOARD */}
-      <section className="chart-section" id="overview-dashboard">
+      <section className="chart-section" id="overview-dashboard" style={{ scrollMarginTop: 80 }}>
         <div className="chart-container">
           <div className="chart-container__title">Interactive Dashboard</div>
           <div className="chart-container__subtitle">
@@ -135,6 +135,8 @@ export default function Page1Overview() {
             display: 'flex',
             gap: 8,
             marginBottom: 20,
+            alignItems: 'center',
+            flexWrap: 'wrap',
           }}>
             <button
               onClick={() => setActiveDash('dash1')}
@@ -174,9 +176,32 @@ export default function Page1Overview() {
             >
               Overview Incidents
             </button>
+
+            {/* View as Image / Back to Live toggle — in the tab row */}
+            <button
+              onClick={() => setImageMode(!imageMode)}
+              title={imageMode ? 'Back to Live Dashboard' : 'View as Image'}
+              style={{
+                marginLeft: 'auto',
+                padding: '8px 18px',
+                borderRadius: '999px',
+                border: '1px solid #00C9A7',
+                background: imageMode ? '#00C9A7' : 'transparent',
+                color: imageMode ? '#0B1437' : '#00C9A7',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.72rem',
+                fontWeight: 600,
+                letterSpacing: '0.5px',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {imageMode ? '◀ Back to Live Dashboard' : '🖼 View as Image'}
+            </button>
           </div>
 
-          {/* Iframe container with fullscreen + image toggle buttons */}
+          {/* Dashboard card container */}
           <div style={{
             width: '100%',
             borderRadius: '8px',
@@ -184,67 +209,48 @@ export default function Page1Overview() {
             border: '1px solid rgba(0,201,167,0.15)',
             boxShadow: '0 0 24px rgba(0,201,167,0.06)',
             position: 'relative',
+            background: imageMode ? '#1a1f3d' : 'transparent',
           }}>
-            {/* Top-right button group */}
-            <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
-              {/* View as Image / Back to Live toggle */}
-              <button
-                onClick={() => setImageMode(!imageMode)}
-                title={imageMode ? 'Back to Live Dashboard' : 'View as Image'}
-                style={{
-                  padding: '7px 16px',
-                  borderRadius: '999px',
-                  border: '1px solid #00C9A7',
-                  background: imageMode ? '#00C9A7' : 'rgba(11,20,55,0.85)',
-                  color: imageMode ? '#0B1437' : '#00C9A7',
-                  fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: '0.7rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.5px',
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(8px)',
-                  transition: 'all 0.25s ease',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {imageMode ? '◀ Back to Live Dashboard' : '🖼 View as Image'}
-              </button>
-
-              {/* Fullscreen toggle */}
-              <button
-                onClick={() => setIsFullscreen(true)}
-                title="Enter fullscreen"
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 8,
-                  border: '1px solid rgba(0,201,167,0.3)',
-                  background: 'rgba(11,20,55,0.85)',
-                  color: '#00C9A7',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backdropFilter: 'blur(8px)',
-                  transition: 'all 0.25s ease',
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 3 21 3 21 9" />
-                  <polyline points="9 21 3 21 3 15" />
-                  <line x1="21" y1="3" x2="14" y2="10" />
-                  <line x1="3" y1="21" x2="10" y2="14" />
-                </svg>
-              </button>
-            </div>
+            {/* Fullscreen toggle — top-right of card */}
+            <button
+              onClick={() => setIsFullscreen(true)}
+              title="Enter fullscreen"
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                zIndex: 10,
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                border: '1px solid rgba(0,201,167,0.3)',
+                background: 'rgba(11,20,55,0.85)',
+                color: '#00C9A7',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backdropFilter: 'blur(8px)',
+                transition: 'all 0.25s ease',
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 3 21 3 21 9" />
+                <polyline points="9 21 3 21 3 15" />
+                <line x1="21" y1="3" x2="14" y2="10" />
+                <line x1="3" y1="21" x2="10" y2="14" />
+              </svg>
+            </button>
 
             {/* Conditional: iframe (live) or static image (fallback) */}
             {imageMode ? (
-              <img
-                src={`${BASE}images/${FALLBACK_IMGS[activeDash]}`}
-                alt={activeDash === 'dash1' ? 'Overview District Dashboard' : 'Overview Incidents Dashboard'}
-                style={{ width: '100%', height: 'auto', display: 'block', minHeight: 400 }}
-              />
+              <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d' }}>
+                <img
+                  src={`${BASE}images/${FALLBACK_IMGS[activeDash]}`}
+                  alt={activeDash === 'dash1' ? 'Overview District Dashboard' : 'Overview Incidents Dashboard'}
+                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+                />
+              </div>
             ) : (
               <iframe
                 title="SAPMRT Interactive Dashboard"
