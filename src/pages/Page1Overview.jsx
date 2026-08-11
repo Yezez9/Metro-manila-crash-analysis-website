@@ -13,7 +13,7 @@ export default function Page1Overview() {
     <div className="page-container">
       {/* HERO */}
       <section className="hero" id="overview-hero">
-        <h1 className="hero__heading">MMARAS</h1>
+        <h1 className="hero__heading">SAPMRT</h1>
         <p className="hero__subtitle">
           Spatiotemporal Analysis and Predictive Modeling of Road Traffic Incidents in Metro Manila: A Machine Learning and GIS Approach Using MMARAS &amp; AADT Data (2015-2024)
         </p>

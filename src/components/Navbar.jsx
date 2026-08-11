@@ -12,7 +12,7 @@ export default function Navbar({ activePage, setActivePage }) {
   return (
     <nav className="navbar" id="navbar">
       <span className="navbar__logo" onClick={() => handleNav('overview')}>
-        MMARAS
+        SAPMRT
       </span>
 
       <button
