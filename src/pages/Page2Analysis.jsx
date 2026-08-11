@@ -9,6 +9,13 @@ const DESC_URLS = {
   time: 'https://app.powerbi.com/reportEmbed?reportId=0a78610e-350b-423b-925c-d93f78fec777&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4',
 };
 
+const FALLBACK_IMGS = {
+  vehicle: 'analysis-vehicle-type-fallback.png',
+  collision: 'analysis-collision-types-fallback.png',
+  age: 'analysis-age-group-fallback.png',
+  time: 'analysis-time-fallback.png',
+};
+
 /* Reusable fullscreen expand button */
 function ExpandBtn({ onClick }) {
   return (
@@ -97,6 +104,7 @@ function ImageOverlay({ src, alt, onClose }) {
 export default function Page2Analysis() {
   const [descTab, setDescTab] = useState('vehicle');
   const [descFullscreen, setDescFullscreen] = useState(false);
+  const [imageMode, setImageMode] = useState(false);
   const [fullImg, setFullImg] = useState(null); // { src, alt }
 
   return (
@@ -133,6 +141,7 @@ export default function Page2Analysis() {
           gap: 8,
           marginBottom: 20,
           flexWrap: 'wrap',
+          alignItems: 'center',
         }}>
           {[
             { key: 'vehicle', label: 'Vehicle Type', activeColor: '#1E90FF', activeBg: 'rgba(30,144,255,0.15)', glowColor: 'rgba(30,144,255,0.4)' },
@@ -164,9 +173,32 @@ export default function Page2Analysis() {
               </button>
             );
           })}
+
+          {/* View as Image / Back to Live toggle — in the tab row */}
+          <button
+            onClick={() => setImageMode(!imageMode)}
+            title={imageMode ? 'Back to Live Dashboard' : 'View as Image'}
+            style={{
+              marginLeft: 'auto',
+              padding: '8px 18px',
+              borderRadius: '999px',
+              border: '1px solid #00C9A7',
+              background: imageMode ? '#00C9A7' : 'transparent',
+              color: imageMode ? '#0B1437' : '#00C9A7',
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.72rem',
+              fontWeight: 600,
+              letterSpacing: '0.5px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {imageMode ? '◀ Back to Live Dashboard' : '🖼 View as Image'}
+          </button>
         </div>
 
-        {/* Iframe container */}
+        {/* Dashboard card container */}
         <div style={{
           width: '100%',
           borderRadius: '8px',
@@ -174,17 +206,60 @@ export default function Page2Analysis() {
           border: '1px solid rgba(30,144,255,0.15)',
           boxShadow: '0 0 24px rgba(30,144,255,0.06)',
           position: 'relative',
+          background: imageMode ? '#1a1f3d' : 'transparent',
         }}>
+          {/* Fullscreen toggle — top-right of card */}
           <ExpandBtn onClick={() => setDescFullscreen(true)} />
-          <iframe
-            title="Descriptive Dashboard"
-            width="100%"
-            height="600"
-            src={DESC_URLS[descTab]}
-            frameBorder="0"
-            allowFullScreen={true}
-            style={{ display: 'block' }}
-          />
+
+          {/* Conditional: iframe (live) or static image (fallback) */}
+          {imageMode ? (
+            <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d', position: 'relative' }}>
+              <img
+                key={descTab}
+                src={`${BASE}images/${FALLBACK_IMGS[descTab]}`}
+                alt={`Descriptive Dashboard - ${descTab}`}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+                onLoad={(e) => {
+                  e.target.style.display = 'block';
+                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'none';
+                }}
+              />
+              {/* Graceful fallback if image fails to load */}
+              <div style={{
+                display: 'none',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                color: '#8C9BB5',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.85rem',
+                textAlign: 'center',
+              }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8C9BB5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Image not available yet</span>
+                <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>Drop the file into public/images/ and redeploy</span>
+              </div>
+            </div>
+          ) : (
+            <iframe
+              title="Descriptive Dashboard"
+              width="100%"
+              height="600"
+              src={DESC_URLS[descTab]}
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block' }}
+            />
+          )}
         </div>
       </section>
 
