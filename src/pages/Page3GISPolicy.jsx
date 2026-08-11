@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+const BASE = import.meta.env.BASE_URL;
+
 const GIS_URLS = {
   map12: 'https://rawcdn.githack.com/Yezez9/Metro-manila-crash-analysis/main/gis/GIS_RF_Classification.html',
   map3: 'https://rawcdn.githack.com/Yezez9/Metro-manila-crash-analysis/main/gis/GIS_Map3_Predictive_2025.html',
@@ -11,6 +13,7 @@ export default function Page3GISPolicy() {
   const [activeMap, setActiveMap] = useState('map12');
   const [mapFullscreen, setMapFullscreen] = useState(false);
   const [dashFullscreen, setDashFullscreen] = useState(false);
+  const [imageMode, setImageMode] = useState(false);
 
   return (
     <div className="page-container">
@@ -188,7 +191,32 @@ export default function Page3GISPolicy() {
 
       {/* ===== POWER BI DASHBOARD ===== */}
       <section className="section" id="gis-powerbi">
-        <h2 style={{ fontSize: '1.5rem', marginBottom: 20, color: '#2ECC71', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, letterSpacing: '1.5px' }}>Explore the Live Dashboard</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+          <h2 style={{ fontSize: '1.5rem', color: '#2ECC71', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, letterSpacing: '1.5px', margin: 0 }}>
+            Explore the Live Dashboard
+          </h2>
+
+          <button
+            onClick={() => setImageMode(!imageMode)}
+            title={imageMode ? 'Back to Live Dashboard' : 'View as Image'}
+            style={{
+              padding: '8px 18px',
+              borderRadius: '999px',
+              border: '1px solid #00C9A7',
+              background: imageMode ? '#00C9A7' : 'transparent',
+              color: imageMode ? '#0B1437' : '#00C9A7',
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.72rem',
+              fontWeight: 600,
+              letterSpacing: '0.5px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {imageMode ? '◀ Back to Live Dashboard' : '🖼 View as Image'}
+          </button>
+        </div>
 
         <div style={{
           width: '100%',
@@ -197,6 +225,7 @@ export default function Page3GISPolicy() {
           border: '1px solid rgba(0,201,167,0.15)',
           boxShadow: '0 0 24px rgba(0,201,167,0.06)',
           position: 'relative',
+          background: imageMode ? '#1a1f3d' : 'transparent',
         }}>
           {/* Fullscreen toggle */}
           <button
@@ -229,15 +258,52 @@ export default function Page3GISPolicy() {
             </svg>
           </button>
 
-          <iframe
-            title="MMARAS Live Dashboard"
-            width="100%"
-            height="541"
-            src={DASHBOARD_URL}
-            frameBorder="0"
-            allowFullScreen={true}
-            style={{ display: 'block' }}
-          />
+          {imageMode ? (
+            <div style={{ width: '100%', height: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1a1f3d', position: 'relative' }}>
+              <img
+                src={`${BASE}images/gis-policy-corridor-fallback.png`}
+                alt="GIS Policy Corridor Fallback Dashboard"
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+                onLoad={(e) => {
+                  e.target.style.display = 'block';
+                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'none';
+                }}
+              />
+              <div style={{
+                display: 'none',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                color: '#8C9BB5',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.85rem',
+                textAlign: 'center',
+              }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8C9BB5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Image not available yet</span>
+                <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>Drop the file into public/images/ and redeploy</span>
+              </div>
+            </div>
+          ) : (
+            <iframe
+              title="MMARAS Live Dashboard"
+              width="100%"
+              height="541"
+              src={DASHBOARD_URL}
+              frameBorder="0"
+              allowFullScreen={true}
+              style={{ display: 'block' }}
+            />
+          )}
         </div>
       </section>
 
