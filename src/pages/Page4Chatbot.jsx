@@ -5,6 +5,7 @@ const p2 = 'e6ijr870tPFLrZPnJ';
 const p3 = 'Q4SWGdyb3FYXeK';
 const p4 = 'Qb0i4CDKECXMpfwVXuKE1';
 const GROQ_API_KEY = [p1, p2, p3, p4].reduce((a, b) => a + b, "");
+const GROQ_MODEL = 'openai/gpt-oss-120b';
 
 const SYSTEM_PROMPT = `You are Max 2.0 — the official AI research assistant for the MMARAS project: "Spatiotemporal Analysis and Predictive Modeling of Road Traffic Incidents in Metro Manila: A Machine Learning and GIS Approach Using MMARAS & AADT Data (2015-2024)", developed by BS Data Science students at Bulacan State University.
 
@@ -138,29 +139,33 @@ export default function Page4Chatbot() {
           Authorization: `Bearer ${GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: GROQ_MODEL,
           messages: apiMessages,
-          temperature: 0.5,
-          max_tokens: 1024,
-          top_p: 0.9,
+          max_completion_tokens: 2048,
+          reasoning_effort: 'low',
         }),
       });
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error?.message || `API error ${res.status}`);
+        console.error('[Max 2.0] Groq API error:', JSON.stringify(err, null, 2));
+        throw new Error('The AI service is temporarily unavailable. Please try again in a moment.');
       }
 
       const data = await res.json();
-      const reply = data.choices?.[0]?.message?.content || 'I could not generate a response. Please try again.';
+      const reply = data.choices?.[0]?.message?.content;
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+      setMessages((prev) => [...prev, {
+        role: 'assistant',
+        content: reply || "Sorry, I couldn't generate a response. Please try again.",
+      }]);
     } catch (error) {
+      console.error('[Max 2.0] Error:', error);
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: `⚠️ **Error:** ${error.message}\n\nPlease try again in a moment.`,
+          content: `⚠️ **Something went wrong.** ${error.message}\n\nPlease try again in a moment.`,
         },
       ]);
     } finally {
@@ -201,7 +206,7 @@ export default function Page4Chatbot() {
             <div>
               <h1 className="chatbot-header__title">Max 2.0</h1>
               <p className="chatbot-header__subtitle">
-                Powered by LLaMA 3.3 70B · Ask anything about the MMARAS project
+                Powered by GPT-OSS 120B · Ask anything about the MMARAS project
               </p>
             </div>
           </div>
@@ -309,7 +314,7 @@ export default function Page4Chatbot() {
             <line x1="12" y1="8" x2="12.01" y2="8" />
           </svg>
           <p>
-            Powered by LLaMA 3.3 70B via Groq API. This chatbot answers questions about the MMARAS project only.
+            Powered by GPT-OSS 120B via Groq API. This chatbot answers questions about the MMARAS project only.
             No conversation data is stored.
           </p>
         </div>
