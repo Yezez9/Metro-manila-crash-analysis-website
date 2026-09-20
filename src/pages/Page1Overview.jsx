@@ -65,7 +65,7 @@ export default function Page1Overview() {
             interventions. The goal is to move beyond reactionary measures toward a
             predictive and prescriptive paradigm for urban safety management.
           </p>
-          <a className="btn-cta" href="https://drive.google.com/drive/folders/1vBFQNu34H9UYX8JOoPBcMZMQJEHv1PG7" target="_blank" rel="noopener noreferrer">
+          <a className="btn-cta" href="https://mmda.gov.ph/efoi-mmda/2-uncategorised/3345-freedom-of-information-foi.html" target="_blank" rel="noopener noreferrer">
             Access Research Data 🗄
           </a>
         </div>
