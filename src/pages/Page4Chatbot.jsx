@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const p1 = 'gsk_';
 const p2 = 'e6ijr870tPFLrZPnJ';
@@ -181,12 +183,7 @@ export default function Page4Chatbot() {
     }
   };
 
-  const formatMessage = (text) => {
-    // Simple markdown-like formatting
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br/>');
-  };
+
 
   return (
     <div className="page-container">
@@ -231,7 +228,24 @@ export default function Page4Chatbot() {
                   </div>
                 )}
                 <div className={`chat-msg__bubble chat-msg__bubble--${msg.role}`}>
-                  <div dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
+                  {msg.role === 'assistant' ? (
+                    <div className="md-content">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          table: ({ children, ...props }) => (
+                            <div className="md-table-wrap">
+                              <table {...props}>{children}</table>
+                            </div>
+                          ),
+                        }}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <span>{msg.content}</span>
+                  )}
                 </div>
                 {msg.role === 'user' && (
                   <div className="chat-msg__avatar chat-msg__avatar--user">
